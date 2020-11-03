@@ -1,0 +1,35 @@
+task #3
+
+yum install python3 -y
+yum install epel-release -y 
+sudo yum update -y
+yum install ansible -y
+
+#make sure firewalld is turn off on slave as well as master node or allow port 
+
+create same user (anadmin) across all server and provide password for all user.
+vim/etc/sudousr
+ansadmin ALL=NOPASSWD: ALL 
+provide root privileges to all users on all server.
+make sure that password authentication yes in all server under /etc/ssh/sshd_config file.
+
+systemctl restart sshd 
+
+goto ansible engine-->su ansadmin-->ssh-keygen
+
+cd /home/ansadmin/
+ls -ltr 
+.ssh      -->this file is genrated 
+cd .ssh/
+
+id_rsa         --->this is private key
+id_rsa.pub     --->this is public
+
+ssh-copy-id -i /home/ansadmin/.ssh/id_rsa.pub ansadmin@<slave-ip>  -->once we copied so it will allowed master without password.
+
+update inventory files
+----------------------->
+in this inventory file you need pass ip of slaves
+
+ansible all -m ping   --->for check connectivity 
+
